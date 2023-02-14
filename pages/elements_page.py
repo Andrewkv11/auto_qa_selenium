@@ -1,10 +1,9 @@
 import random
-import time
-
+import requests
 from selenium.webdriver.common.by import By
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
-    WebTablePageLocators, ButtonsPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators
 from pages.base_page import BasePage
 
 
@@ -165,4 +164,26 @@ class ButtonsPage(BasePage):
 
     def check_clicked_on_the_button(self, element):
         return self.element_is_present(element).text
+
+
+class LinksPage(BasePage):
+    locators = LinksPageLocators()
+
+    def check_new_tab_simple_link(self):
+        simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
+        link_href = simple_link.get_attribute('href')
+        request = requests.get('https://demoqa.com/bad-request')
+        if request.status_code == 200:
+            simple_link.click()
+            self.switch_to_new_tab()
+            return link_href, self.get_current_url()
+        else:
+            return request.status_code, link_href
+
+    def check_broken_link(self, url):
+        request = requests.get(url)
+        if request.status_code == 200:
+            self.element_is_present(self.locators.BAD_REQUEST).click()
+        else:
+            return request.status_code
 
