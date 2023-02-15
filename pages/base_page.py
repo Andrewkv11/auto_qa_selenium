@@ -49,3 +49,10 @@ class BasePage:
     def get_current_url(self):
         return self.driver.current_url
 
+    def remove_footer(self):
+        self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+
+    def remove_fixedban(self):
+        self.driver.execute_script("document.getElementById('fixedban').style.display = 'none'")
+
+
