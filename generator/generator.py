@@ -19,3 +19,12 @@ def generated_person():
         current_address=faker_ru.address(),
         permanent_address=faker_ru.address(),
     )
+
+
+def generated_file():
+    path = f'/home/andrew/PyProjects/auto_qa_selenium/filetest{random.randint(0,999)}.txt'
+    file = open(path, 'w+')
+    file.write(f'Hello World{random.randint(0,999)}')
+    file.close()
+    return file.name, path
+
