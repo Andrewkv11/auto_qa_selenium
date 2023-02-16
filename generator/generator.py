@@ -1,5 +1,5 @@
 import random
-from data.data import Person
+from data.data import Person, Color
 from faker import Faker
 
 faker_ru = Faker('ru-Ru')
@@ -22,9 +22,14 @@ def generated_person():
 
 
 def generated_file():
-    path = f'/home/andrew/PyProjects/auto_qa_selenium/filetest{random.randint(0,999)}.txt'
+    path = f'/home/andrew/PyProjects/auto_qa_selenium/filetest{random.randint(0, 999)}.txt'
     file = open(path, 'w+')
-    file.write(f'Hello World{random.randint(0,999)}')
+    file.write(f'Hello World{random.randint(0, 999)}')
     file.close()
     return file.name, path
 
+
+def generated_color():
+    yield Color(
+        color_name=['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Black', 'White', 'Voilet', 'Indigo', 'Magenta', 'Aqua']
+    )
