@@ -1,7 +1,7 @@
 import time
 import time
 
-from pages.alerts_frame_windows_page import BrowserWindowsPage, AlertsPage
+from pages.alerts_frame_windows_page import BrowserWindowsPage, AlertsPage, FramesPage
 
 
 class TestAlertsFrameWindow:
@@ -44,6 +44,16 @@ class TestAlertsFrameWindow:
             alert_page.open()
             alert_text, result_text, = alert_page.check_prompt_alert()
             assert result_text.split()[-1] == alert_text, "Alert did not show up"
+
+    class TestFramesPage:
+
+        def test_frames(self, driver):
+            frame_page = FramesPage(driver, 'https://demoqa.com/frames')
+            frame_page.open()
+            result_frame_1 = frame_page.check_frame('frame1')
+            result_frame_2 = frame_page.check_frame('frame2')
+            assert result_frame_1 == ('This is a sample page', '500px', '350px'), "The frame_1 does not exists"
+            assert result_frame_2 == ('This is a sample page', '100px', '100px'), "The frame_2 does no exists"
 
 
 
